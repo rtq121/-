@@ -11,7 +11,6 @@ HTML_TEMPLATE = """
     <title>شروحاتي AI - المنصة الأكاديمية التفاعلية المتقدمة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- MathJax لدعم المعادلات الرياضية الأكاديمية -->
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap');
@@ -21,6 +20,7 @@ HTML_TEMPLATE = """
             background-color: #0b0f19;
             color: #e2e8f0;
             overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .cyber-bg {
@@ -58,16 +58,22 @@ HTML_TEMPLATE = """
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* تحسين استجابة الهواتف المحمولة */
         @media (max-width: 768px) {
-            #mainContent {
-                margin-right: 0 !important;
-            }
-            #sidebar {
-                transform: translateX(100%);
-            }
-            #sidebar.open {
-                transform: translateX(0);
+            #mainContent { margin-right: 0 !important; }
+            #sidebar { transform: translateX(100%); }
+            #sidebar.open { transform: translateX(0); }
+            
+            /* تصميم القلم الذكي المخصص للهواتف في أسفل الشاشة */
+            #smartPenTooltip {
+                position: fixed !important;
+                bottom: 20px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                top: auto !important;
+                width: 90% !important;
+                max-width: 380px !important;
+                justify-content: center !important;
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.8), 0 0 15px rgba(245, 158, 11, 0.4) !important;
             }
         }
     </style>
@@ -134,7 +140,6 @@ HTML_TEMPLATE = """
                 </span>
             </div>
 
-            <!-- أزرار التحكم الصوتي -->
             <div class="flex items-center gap-1.5">
                 <button onclick="readAloudFull()" title="قراءة الشرح بالصوت" class="bg-blue-600/20 hover:bg-blue-600/40 border border-blue-500/40 text-blue-300 px-2.5 py-1.5 rounded-xl text-xs flex items-center gap-1 transition-all">
                     <i class="fa-solid fa-volume-high text-xs"></i>
@@ -146,9 +151,9 @@ HTML_TEMPLATE = """
             </div>
         </header>
 
-        <!-- قلم البحث الذكي -->
-        <div id="smartPenTooltip" class="hidden fixed z-50 bg-slate-900 border border-amber-500/50 text-amber-300 px-3 py-2 rounded-xl shadow-2xl flex items-center gap-2 cursor-pointer btn-bounce text-xs font-bold" onclick="explainSelection()">
-            <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i>
+        <!-- قلم البحث الذكي (مطور للهاتف والكمبيوتر) -->
+        <div id="smartPenTooltip" class="hidden fixed z-50 bg-slate-900 border-2 border-amber-500 text-amber-300 px-4 py-2.5 rounded-2xl shadow-2xl flex items-center gap-2 cursor-pointer btn-bounce text-xs sm:text-sm font-bold" onclick="explainSelection()">
+            <i class="fa-solid fa-wand-magic-sparkles text-amber-400 text-base animate-pulse"></i>
             <span>قلم البحث الذكي: اشرح المحدَّد</span>
         </div>
 
@@ -332,27 +337,37 @@ HTML_TEMPLATE = """
             }
         }
 
-        document.addEventListener('selectionchange', () => {
-            const selection = window.getSelection();
-            const text = selection.toString().trim();
-            const tooltip = document.getElementById('smartPenTooltip');
+        // معالجة التحديد المتوافقة مع الهواتف والكمبيوتر
+        function handleTextSelection() {
+            setTimeout(() => {
+                const selection = window.getSelection();
+                const text = selection.toString().trim();
+                const tooltip = document.getElementById('smartPenTooltip');
 
-            if (text.length > 5 && document.getElementById('resultArea').contains(selection.anchorNode)) {
-                selectedTextForPen = text;
-                const range = selection.getRangeAt(0);
-                const rect = range.getBoundingClientRect();
-
-                tooltip.style.top = `${rect.top - 45}px`;
-                tooltip.style.left = `${rect.left + (rect.width / 2) - 80}px`;
-                tooltip.classList.remove('hidden');
-            } else {
-                setTimeout(() => {
-                    if(!window.getSelection().toString().trim()) {
+                if (text.length > 3 && document.getElementById('resultArea').contains(selection.anchorNode)) {
+                    selectedTextForPen = text;
+                    
+                    if (window.innerWidth > 768) {
+                        try {
+                            const range = selection.getRangeAt(0);
+                            const rect = range.getBoundingClientRect();
+                            tooltip.style.top = `${rect.top - 45}px`;
+                            tooltip.style.left = `${rect.left + (rect.width / 2) - 80}px`;
+                        } catch(e) {}
+                    }
+                    
+                    tooltip.classList.remove('hidden');
+                } else {
+                    if (!selectedTextForPen) {
                         tooltip.classList.add('hidden');
                     }
-                }, 200);
-            }
-        });
+                }
+            }, 100);
+        }
+
+        document.addEventListener('selectionchange', handleTextSelection);
+        document.addEventListener('mouseup', handleTextSelection);
+        document.addEventListener('touchend', handleTextSelection);
 
         async function explainSelection() {
             document.getElementById('smartPenTooltip').classList.add('hidden');
@@ -370,6 +385,8 @@ HTML_TEMPLATE = """
                 document.getElementById('penExplanation').innerHTML = data.explanation;
             } catch (err) {
                 document.getElementById('penExplanation').innerText = "حدث خطأ أثناء تفكيك النص.";
+            } finally {
+                selectedTextForPen = "";
             }
         }
 
@@ -396,6 +413,7 @@ HTML_TEMPLATE = """
             document.getElementById('fileInput').value = '';
             document.getElementById('fileName').innerText = 'إرفاق صورة/مستند';
             document.getElementById('resultArea').classList.add('hidden');
+            document.getElementById('smartPenTooltip').classList.add('hidden');
             stopSpeech();
         }
 
@@ -410,6 +428,7 @@ HTML_TEMPLATE = """
 
             document.getElementById('loader').classList.remove('hidden');
             document.getElementById('resultArea').classList.add('hidden');
+            document.getElementById('smartPenTooltip').classList.add('hidden');
             stopSpeech();
 
             try {
