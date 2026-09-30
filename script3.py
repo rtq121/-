@@ -79,7 +79,7 @@ HTML_TEMPLATE = """
                     </div>
                     <span class="font-extrabold text-xl text-white">شروحاتي AI</span>
                 </div>
-                <button onclick="toggleSidebar()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+                <button onclick="toggleSidebar()" class="text-slate-400 hover:text-white p-1 rounded-lg md:hidden">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
@@ -109,7 +109,7 @@ HTML_TEMPLATE = """
             </div>
             <div class="text-xs">
                 <p class="font-bold text-slate-200">المُراجع الأكاديمي الجامعي</p>
-                <p class="text-slate-400">نمط Gemini المريح</p>
+                <p class="text-slate-400">نمط الذكاء التفاعلي</p>
             </div>
         </div>
     </aside>
@@ -120,7 +120,7 @@ HTML_TEMPLATE = """
         <!-- Navbar -->
         <header class="gemini-card rounded-none border-x-0 border-t-0 sticky top-0 z-40 px-4 sm:px-6 py-3 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <button id="menuBtn" onclick="toggleSidebar()" class="text-slate-300 hover:text-white p-2 rounded-xl bg-slate-800 border border-slate-700">
+                <button id="menuBtn" onclick="toggleSidebar()" class="text-slate-300 hover:text-white p-2 rounded-xl bg-slate-800 border border-slate-700 md:hidden">
                     <i class="fa-solid fa-bars text-lg"></i>
                 </button>
                 <span class="text-xs font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20 px-3 py-1 rounded-full flex items-center gap-1.5">
@@ -153,14 +153,13 @@ HTML_TEMPLATE = """
                     كيف يمكنني مساعدتك في <span class="text-blue-400">دراستك اليوم؟</span>
                 </h1>
                 <p class="text-slate-400 text-xs sm:text-sm">
-                    اكتب سؤالك أو موضوعك للحصول على شرح منظّم ومراجعة مخصصة للاختبارات الجامعية.
+                    اكتب أي سؤال أو مفهوم للحصول على شرح شامل ومراجعة للأختبارات الأكاديمية.
                 </p>
             </div>
 
             <!-- خيار التلخيص العالي والشريط الرئيسي -->
             <div class="gemini-card p-4 sm:p-5 shadow-xl space-y-4">
                 
-                <!-- زر التلخيص السريع في الأعلى -->
                 <div class="flex items-center justify-between pb-3 border-b border-slate-800">
                     <span class="text-xs font-bold text-slate-400 flex items-center gap-1.5">
                         <i class="fa-solid fa-sliders text-blue-400"></i> وضع الإجابة:
@@ -176,7 +175,7 @@ HTML_TEMPLATE = """
                 </div>
 
                 <div class="relative">
-                    <textarea id="searchQuery" rows="3" placeholder="مثال: كم عدد العظام في جسم الإنسان؟ أو اشرح قانون أوم..." class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl p-3.5 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all resize-none text-sm leading-relaxed"></textarea>
+                    <textarea id="searchQuery" rows="3" placeholder="اكتب سؤالك أو موضوعك هنا... مثال: ما هو قانون أوم؟ أو اشرح الجهاز العصبي..." class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl p-3.5 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all resize-none text-sm leading-relaxed"></textarea>
                 </div>
 
                 <div class="flex flex-col sm:flex-row justify-between items-center gap-3">
@@ -198,7 +197,7 @@ HTML_TEMPLATE = """
             <!-- مؤشر التحميل -->
             <div id="loader" class="hidden text-center py-8 space-y-3">
                 <div class="inline-block animate-spin rounded-full h-9 w-9 border-4 border-blue-500 border-t-transparent"></div>
-                <p class="text-slate-300 animate-pulse font-semibold text-xs sm:text-sm">جاري اختيار الصورة الدقيقة وإعداد بنك معلومات الاختبار...</p>
+                <p class="text-slate-300 animate-pulse font-semibold text-xs sm:text-sm">جاري تحليل سؤالك وإعداد المراجعة الشاملة...</p>
             </div>
 
             <!-- منطقة النتيجة -->
@@ -212,23 +211,23 @@ HTML_TEMPLATE = """
                     </div>
                 </div>
 
-                <!-- الصورة التوضيحية الدقيقة -->
+                <!-- الصورة التوضيحية -->
                 <div class="gemini-card p-4 sm:p-5 space-y-3">
                     <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2 border-b border-slate-800 pb-2">
                         <i class="fa-solid fa-image"></i>
-                        الشكل والتوضيح البصري المطابق
+                        التوضيح المرئي
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
                         <div class="overflow-hidden rounded-xl border border-slate-700 bg-slate-900 flex items-center justify-center p-1">
-                            <img id="resImage" src="" alt="صورة متعلقة بالسؤال" class="w-full h-52 object-cover rounded-lg">
+                            <img id="resImage" src="" alt="صورة توضيحية" class="w-full h-52 object-cover rounded-lg">
                         </div>
                         <p id="resImageCaption" class="text-xs text-slate-300 leading-relaxed bg-slate-900/60 p-3.5 rounded-xl border border-slate-800">
-                            صورة وتوضيح مرئي مباشر ودقيق يخص <span id="captionTopic" class="text-blue-400 font-bold"></span>.
+                            صورة وتوضيح مرئي مباشر يخص الموضوع المترابط: <span id="captionTopic" class="text-blue-400 font-bold"></span>.
                         </p>
                     </div>
                 </div>
 
-                <!-- الشرح والمراجعة الأكاديمية -->
+                <!-- الشرح والأجوبة -->
                 <div class="gemini-card p-5 sm:p-6 space-y-3">
                     <h3 class="text-sm font-bold text-blue-400 flex items-center gap-2 border-b border-slate-800 pb-2">
                         <i class="fa-solid fa-graduation-cap"></i>
@@ -237,7 +236,7 @@ HTML_TEMPLATE = """
                     <div id="resTheory" class="text-slate-300 leading-relaxed space-y-3 text-xs sm:text-sm"></div>
                 </div>
 
-                <!-- النقاط المفتاحية والمعادلات إن وجدت -->
+                <!-- النقاط المفتاحية -->
                 <div id="mathContainer" class="gemini-card p-5 sm:p-6 space-y-3">
                     <h3 class="text-sm font-bold text-indigo-400 flex items-center gap-2 border-b border-slate-800 pb-2">
                         <i class="fa-solid fa-key"></i>
@@ -246,25 +245,25 @@ HTML_TEMPLATE = """
                     <div id="resMath" class="bg-slate-900/80 border border-slate-800 rounded-xl p-4 text-slate-200 text-xs sm:text-sm leading-relaxed"></div>
                 </div>
 
-                <!-- المصطلحات المفتاحية للاختبار -->
+                <!-- المصطلحات المفتاحية -->
                 <div class="gemini-card p-5 sm:p-6 space-y-3">
                     <h3 class="text-sm font-bold text-purple-400 flex items-center gap-2 border-b border-slate-800 pb-2">
                         <i class="fa-solid fa-list-check"></i>
-                        3. مصطلحات وتعريفات هامة حفظ للاختبار
+                        3. مصطلحات وتعاريف هامة
                     </h3>
                     <div id="resDefinitions" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
                 </div>
 
-                <!-- أسئلة وتطبيقات المراجعة -->
+                <!-- أسئلة المراجعة -->
                 <div class="gemini-card p-5 sm:p-6 space-y-3">
                     <h3 class="text-sm font-bold text-emerald-400 flex items-center gap-2 border-b border-slate-800 pb-2">
                         <i class="fa-solid fa-circle-question"></i>
-                        4. أفكار أسئلة امتحانات وتطبيقات متوقعة
+                        4. أسئلة امتحانات وتطبيقات متوقعة
                     </h3>
                     <div id="resApplications" class="text-slate-300 leading-relaxed text-xs sm:text-sm space-y-2"></div>
                 </div>
 
-                <!-- المصادر والمراجع -->
+                <!-- الفيديوهات -->
                 <div class="gemini-card p-5 sm:p-6 space-y-3">
                     <h3 class="text-sm font-bold text-red-400 flex items-center gap-2 border-b border-slate-800 pb-2">
                         <i class="fa-brands fa-youtube"></i>
@@ -380,7 +379,7 @@ HTML_TEMPLATE = """
         async function explainSelection() {
             document.getElementById('smartPenTooltip').classList.add('hidden');
             document.getElementById('penSelectedText').innerText = selectedTextForPen;
-            document.getElementById('penExplanation').innerHTML = '<div class="text-center py-4 text-amber-400 animate-pulse">جاري تبسيط النص للمراجعة...</div>';
+            document.getElementById('penExplanation').innerHTML = '<div class="text-center py-4 text-amber-400 animate-pulse">جاري تفكيك النص وتبسيطه...</div>';
             document.getElementById('penModal').classList.remove('hidden');
 
             try {
@@ -392,7 +391,7 @@ HTML_TEMPLATE = """
                 const data = await response.json();
                 document.getElementById('penExplanation').innerHTML = data.explanation;
             } catch (err) {
-                document.getElementById('penExplanation').innerText = "حدث خطأ أثناء تفكيك النص.";
+                document.getElementById('penExplanation').innerText = "حدث خطأ أثناء تحليل النص المترجم.";
             } finally {
                 selectedTextForPen = "";
             }
@@ -500,7 +499,7 @@ HTML_TEMPLATE = """
 
             } catch (error) {
                 document.getElementById('loader').classList.add('hidden');
-                alert("حدث خطأ أثناء إعداد الشرح والمراجعة.");
+                alert("حدث خطأ أثناء تحضير الإجابة والمراجعة.");
             }
         }
 
@@ -546,74 +545,61 @@ def analyze_page():
     user_query = req_data.get("query", "").strip()
     is_summary = req_data.get("is_summary", False)
     
-    topic_title = user_query if user_query else "كم عدد العظام في جسم الإنسان؟"
+    topic_title = user_query if user_query else "مراجعة موضوع عام"
     encoded_topic = urllib.parse.quote(topic_title)
 
     q_lower = topic_title.lower()
 
+    # صور عشوائية متناسبة
     if any(k in q_lower for k in ["عظم", "عظام", "هيكل", "جسم", "bone", "skeleton"]):
         image_url = "https://images.unsplash.com/photo-1530210124550-912dc1381cb8?auto=format&fit=crop&w=1000&q=80"
-        
-        if is_summary:
-            theory_content = """
-                <div class="p-3 bg-blue-950/40 border border-blue-500/30 rounded-xl space-y-1 text-xs sm:text-sm">
-                    <p class="font-bold text-blue-300">📌 التلخيص المكثف للاختبار:</p>
-                    <p>• يحتوي جسم الإنسان البالغ على <strong>206 عظيمة</strong> بالضبط.</p>
-                    <p>• يولد الطفل وبجسمه حوالي 270 إلى 300 عظمة ثم تلتحم مع النمو.</p>
-                    <p>• أصغر عظمة هي <strong>عظمة الركاب (Stapes)</strong> بالأذن، وأكبرها هي <strong>عظمة الفخذ (Femur)</strong>.</p>
-                </div>
-            """
-        else:
-            theory_content = """
-                <p class="leading-relaxed">يحتوي الجهاز الهيكلي للإنسان البالغ على <strong>206 عظيمة</strong> مفصّلة. يولد الإنسان وفي جسمه حوالي 270 إلى 300 عظمة غضروفية، ومع التطور والنمو تلتحم العديد منها معاً ليصل المجموع إلى 206 عظمة في مرحلة البلوغ.</p>
-                <p class="leading-relaxed">ينقسم الهيكل العظمي إلى قسمين رئيسيين في الامتحانات الأكاديمية:</p>
-                <ul class="list-disc list-inside space-y-1 text-slate-300 my-2 pr-2">
-                    <li><strong>الهيكل المحوري (Axial Skeleton):</strong> يتكون من 80 عظمة (الجمجمة، العمود الفقري، والقفص الصدري).</li>
-                    <li><strong>الهيكل الطرفي (Appendicular Skeleton):</strong> يتكون من 126 عظمة (الأطراف العلوية والسفلية وعظام الحوض).</li>
-                </ul>
-            """
-
-        math_text = """
-            • <strong>أطول وأقوى عظمة:</strong> عظمة الفخذ (Femur).<br>
-            • <strong>أصغر عظمة:</strong> عظمة الركاب في الأذن الوسطى (طولها 3 ملم).<br>
-            • <strong>الوظائف الأساسية الهامة للامتحان:</strong> الدعم الهيكلي، حماية الأعضاء الحيوية، إنتاج خلايا الدم في النخاع العظمي، وتخزين الكالسيوم.
-        """
-
-        definitions = [
-            {"term": "الهيكل المحوري (Axial Skeleton)", "desc": "يشمل عظام المحور المركزي للجسم (الجمجمة والعمود الفقري والقفص الصدري - 80 عظمة)."},
-            {"term": "النسيج العظمي الكثيف (Compact Bone)", "desc": "الطبقة الخارجية الصلبة التي توفر القوة والمقاومة للكسور."}
-        ]
-
-        applications = """
-            <p><strong>سؤال امتحان متكرر:</strong> علل: يتناقص عدد عظام الأطفال عند الكبر؟</p>
-            <p class="text-slate-400 text-xs mt-1">الإجابة النموذجية: بسبب التحام العديد من العظام الغضروفية أثناء النمو لتشكل عظاماً أصلب وأكبر في مرحلة البلوغ.</p>
-        """
-
-    elif any(k in q_lower for k in ["دماغ", "عصب", "brain", "neuron"]):
+    elif any(k in q_lower for k in ["دماغ", "عصب", "brain", "neuron", "قلب"]):
         image_url = "https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=1000&q=80"
-        theory_content = f"<p>يتكون الدماغ والجهاز العصبي من ملايين الخلايا العصبية لتمرير الإشارات الكهربائية والكيميائية للتحكم في جميع وظائف الجسم.</p>"
-        math_text = "• سرعة النبضات العصبية تصل إلى 120 م/ث.<br>• يحتوي الدماغ على نحو 86 مليار خلية عصبية."
-        definitions = [
-            {"term": "الخلية العصبية (Neuron)", "desc": "وحدة البناء والوظيفية الأساسية للجهاز العصبي."},
-            {"term": "المشبك العصبي (Synapse)", "desc": "موقع اتصال وتمرير الناقلات الكيميائية بين خليتين."}
-        ]
-        applications = "<p>تُطرح أسئلة الدماغ عادة حول أجزائه الرئيسية (المخ، المخيخ، وجذع الدماغ) ووظيفة كل منها.</p>"
-
+    elif any(k in q_lower for k in ["فيزياء", "كهرباء", "قانون", "امتحان", "رياضيات", "حساب"]):
+        image_url = "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=1000&q=80"
     else:
         image_url = "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1000&q=80"
+
+    # المحتوى التفاعلي الديناميكي بناءً على السؤال المكتوب
+    if is_summary:
         theory_content = f"""
-            <p class="leading-relaxed">دراسة ومراجعة موضوع <strong>{topic_title}</strong> تعتمد على استيعاب المفاهيم النظرية وتطبيقها بشكل منهجي في الأسئلة الأكاديمية.</p>
+            <div class="p-3.5 bg-purple-950/40 border border-purple-500/30 rounded-xl space-y-2 text-xs sm:text-sm">
+                <p class="font-bold text-purple-300">⚡ ملخص مكثف وسريع لموضوع: {topic_title}</p>
+                <p>• <strong>النقطة الأساسية:</strong> يدور هذا الموضوع حول فهم العناصر الرئيسية المكونة لـ ({topic_title}) وكيفية ربطها بالمفاهيم الأساسية.</p>
+                <p>• <strong>التركيز للامتحان:</strong> التركيز الأهم في الاختبارات هو التمييز بين الخصائص والتطبيقات المباشرة المتعلقة بـ {topic_title}.</p>
+            </div>
         """
-        math_text = f"• النقاط الأساسية والمحاور الواجب تركيز المراجعة عليها لـ {topic_title}."
-        definitions = [
-            {"term": f"تعريف {topic_title}", "desc": "الإطار الأكاديمي الرئيسي المعتمد لهذا المفهوم في المقررات الجامعية."},
-            {"term": "الملاحظة المفتاحية", "desc": "الربط بين الأسباب والنتائج في الامتحانات الأكاديمية."}
-        ]
-        applications = f"<p>تتضمن أوراق الاختبارات عادة أسئلة المقارنة والتعليل المتعلقة بـ <strong>{topic_title}</strong>.</p>"
+    else:
+        theory_content = f"""
+            <p class="leading-relaxed">عند دراسة موضوع <strong>"{topic_title}"</strong>، يتم مناقشة الأساس الأكاديمي والتطبيقات المرتبطة به ضمن المقرر الدراسي.</p>
+            <p class="leading-relaxed mt-2">يتطلب استيعاب هذا الموضوع التركيز على النقاط التالية:</p>
+            <ul class="list-disc list-inside space-y-1.5 text-slate-300 my-2 pr-2">
+                <li>المفاهيم والنظريات الأساسية المرتبطة بـ {topic_title}.</li>
+                <li>العوامل والأسباب المباشرة التي تؤثر في تحليل وتحضير {topic_title}.</li>
+                <li>أوجه المقارنة الشائعة التي ترد في أسئلة الامتحانات النصفية والنهائية.</li>
+            </ul>
+        """
+
+    math_text = f"""
+        • <strong>المحور الأول:</strong> فهم التعاريف المباشرة المترتبة على موضوع {topic_title}.<br>
+        • <strong>المحور الثاني:</strong> الربط بين المعطيات والنتائج في المسائل والأسئلة المتعلقة بـ {topic_title}.<br>
+        • <strong>تنبيه للاختبار:</strong> انتبه للتفاصيل الصغيرة والتسميات العلمية أثناء حل أسئلة {topic_title}.
+    """
+
+    definitions = [
+        {"term": f"المفهوم الرئيسي لـ {topic_title}", "desc": "التعريف الأكاديمي المعتمد والمحوري في أوراق المراجعة والامتحانات."},
+        {"term": "التطبيق العلمي", "desc": f"كيفية استغلال مفاهيم {topic_title} في حل المسائل والأسئلة العملية."}
+    ]
+
+    applications = f"""
+        <p class="font-semibold text-emerald-300">سؤال امتحان متوقع حول ({topic_title}):</p>
+        <p class="text-slate-300 mt-1">س: اشرح أو علل الأهمية والوظيفة الأساسية المتعلقة بـ {topic_title}؟</p>
+        <p class="text-slate-400 text-xs mt-1 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800">💡 <strong>إرشاد الإجابة:</strong> قم بذكر التعريف الرئيسي أولاً، ثم اذكر نقطتين من الخصائص أو الوظائف المدعومة بالجدول أو المعادلة.</p>
+    """
 
     videos = [
-        {"title": f"شرح ومراجعة شاملة لـ {topic_title} - يوتيوب", "url": f"https://www.youtube.com/results?search_query={encoded_topic}"},
-        {"title": f"أسئلة امتحانات وتدريبات وحلول حول {topic_title}", "url": f"https://www.youtube.com/results?search_query={encoded_topic}+شرح+اختبار"}
+        {"title": f"شرح ومراجعة شاملة لـ ({topic_title}) - يوتيوب", "url": f"https://www.youtube.com/results?search_query={encoded_topic}"},
+        {"title": f"أسئلة امتحانات وتدريبات وحلول حول ({topic_title})", "url": f"https://www.youtube.com/results?search_query={encoded_topic}+شرح+اختبار"}
     ]
 
     return jsonify({
@@ -631,7 +617,7 @@ def explain_pen():
     req_data = request.get_json() or {}
     selected_text = req_data.get("selection", "")
     return jsonify({
-        "explanation": f"<p>تبسيط المفهوم للأستاذ والامتحان (<strong>{selected_text}</strong>): هذا المفهوم يُعد نقطة محورية في الاختبارات ويطلب من الطالب شرح علاقتها بالنتائج الأساسية.</p>"
+        "explanation": f"<p class='leading-relaxed'>تفكيك وشرح عبارة (<strong>{selected_text}</strong>):</p><p class='text-slate-300 mt-1'>هذه الجزئية تشير إلى المفهوم المفتاحي الذي يربط بين النظرية والتطبيق في السؤال، ويُنصح بحفظ المصطلح ومراجعة تطبيقه في الامتحانات.</p>"
     })
 
 if __name__ == "__main__":
