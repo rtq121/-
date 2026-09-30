@@ -549,7 +549,6 @@ def analyze_page():
     topic_title = user_query if user_query else "كم عدد العظام في جسم الإنسان؟"
     encoded_topic = urllib.parse.quote(topic_title)
 
-    # اختيار الصور والأدوات الأكاديمية الذكية بحسب الكلمات المفتاحية
     q_lower = topic_title.lower()
 
     if any(k in q_lower for k in ["عظم", "عظام", "هيكل", "جسم", "bone", "skeleton"]):
@@ -601,7 +600,6 @@ def analyze_page():
         applications = "<p>تُطرح أسئلة الدماغ عادة حول أجزائه الرئيسية (المخ، المخيخ، وجذع الدماغ) ووظيفة كل منها.</p>"
 
     else:
-        # صور عامة عالية الجودة ومناسبة لأي موضوع
         image_url = "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1000&q=80"
         theory_content = f"""
             <p class="leading-relaxed">دراسة ومراجعة موضوع <strong>{topic_title}</strong> تعتمد على استيعاب المفاهيم النظرية وتطبيقها بشكل منهجي في الأسئلة الأكاديمية.</p>
