@@ -1,0 +1,58 @@
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+body {
+  background: #0b0e17;
+  color: #e8ecf4;
+  min-height: 100vh;
+  background-image: radial-gradient(circle at 80% -10%, rgba(0,180,255,.15), transparent 40%),
+                    radial-gradient(circle at 10% 110%, rgba(140,0,255,.12), transparent 40%);
+}
+header { text-align: center; padding: 2rem 1rem 1rem; }
+header h1 { font-size: 2.2rem; background: linear-gradient(90deg,#00d4ff,#8a2be2); -webkit-background-clip: text; background-clip: text; color: transparent; }
+header p { color: #8b93a7; margin: .3rem 0 1.2rem; }
+nav { display: flex; gap: .6rem; justify-content: center; }
+.tab { padding: .5rem 1.6rem; border: 1px solid #2a3040; background: #141826; color: #aab3c5; border-radius: 999px; cursor: pointer; font-size: 1rem; font-weight: 700; transition: .2s; }
+.tab.active { background: linear-gradient(90deg,#00b4ff,#7b2ff7); color: #fff; border-color: transparent; }
+main { max-width: 1100px; margin: auto; padding: 1rem; }
+.panel { display: none; }
+.panel.active { display: block; animation: fade .3s; }
+@keyframes fade { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; } }
+.selectors { display: flex; gap: 1rem; justify-content: center; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+select { padding: .7rem 1.2rem; border-radius: 12px; border: 1px solid #2a3040; background: #141826; color: #fff; font-size: 1rem; min-width: 220px; cursor: pointer; }
+select:disabled { opacity: .5; cursor: not-allowed; }
+.vs { font-weight: 800; font-size: 1.3rem; color: #00d4ff; }
+.search-toggle { background: #141826; border: 1px solid #2a3040; color: #aab3c5; border-radius: 12px; padding: .6rem .8rem; cursor: pointer; font-size: 1.1rem; }
+.search-toggle:hover { border-color: #00b4ff; }
+.search-input { padding: .7rem 1.2rem; border-radius: 12px; border: 1px solid #2a3040; background: #141826; color: #fff; font-size: 1rem; min-width: 260px; }
+.gpu-card { background: #12162a; border: 1px solid #252c45; border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 40px rgba(0,0,0,.5); }
+.hidden { display: none; }
+.gpu-head { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #252c45; padding-bottom: 1rem; margin-bottom: 1rem; }
+.gpu-img { width: 220px; height: 110px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+.nvidia { background: linear-gradient(135deg,#1a3a1a,#76b90055); border: 1px solid #76b900; }
+.amd { background: linear-gradient(135deg,#3a1a1a,#ed1c2455); border: 1px solid #ed1c24; }
+.intel { background: linear-gradient(135deg,#1a2a3a,#0068b555); border: 1px solid #0068b5; }
+.gpu-head h2 { font-size: 1.6rem; }
+.badge { display: inline-block; padding: .15rem .7rem; border-radius: 999px; background: #1f2540; color: #9db2ff; font-size: .8rem; margin-inline-start: .5rem; }
+.spec-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap: .8rem; }
+.spec { background: #0d1122; border: 1px solid #20264a; border-radius: 12px; padding: .8rem 1rem; }
+.spec b { color: #00d4ff; display: block; font-size: .85rem; margin-bottom: .2rem; }
+.perf-bars { margin-top: 1.2rem; }
+.bar-row { margin-bottom: .8rem; }
+.bar-row span { display: flex; justify-content: space-between; font-size: .9rem; margin-bottom: .3rem; }
+.bar { height: 10px; border-radius: 999px; background: #20264a; overflow: hidden; }
+.bar i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg,#00d4ff,#7b2ff7); transition: width .6s; }
+/* المقارنة */
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+table.compare { width: 100%; border-collapse: collapse; background: #12162a; border-radius: 16px; overflow: hidden; }
+table.compare th, table.compare td { padding: .8rem; text-align: center; border-bottom: 1px solid #232a4d; }
+table.compare th { background: #1a2040; }
+td.label { color: #9aa5c8; font-weight: 700; }
+.win { color: #3ddc84; font-weight: 800; }
+.win-cell { background: rgba(61,220,132,.12); border-radius: 8px; }
+.score-row { font-size: 1.2rem; font-weight: 800; }
+footer { text-align: center; color: #5a6478; padding: 2rem 1rem; font-size: .85rem; }
+@media (max-width: 640px) {
+  header h1 { font-size: 1.6rem; }
+  .gpu-head { justify-content: center; text-align: center; }
+  select { min-width: 100%; }
+  .compare-grid { grid-template-columns: 1fr; }
+}

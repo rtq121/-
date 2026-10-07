@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GPU Arena | استعرض وقارن كروت الشاشة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>🎮 GPU Arena</h1>
+  <nav>
+    <button class="tab active" data-tab="specs">مواصفات كرت</button>
+    <button class="tab" data-tab="compare">مقارنة كرتين</button>
+  </nav>
+</header>
+
+<main>
+  <!-- القسم الأول -->
+  <section id="specs" class="panel active">
+    <div class="selectors">
+      <select id="brandSelect"><option value="">اختر الشركة المصنعة</option></select>
+      <select id="modelSelect" disabled><option value="">اختر الموديل أولاً</option></select>
+    </div>
+    <div id="gpuCard" class="gpu-card hidden"></div>
+  </section>
+
+  <!-- القسم الثاني -->
+  <section id="compare" class="panel">
+    <div class="selectors">
+      <select id="gpuA"><option value="">اختر الكرت الأول</option></select>
+      <span class="vs">VS</span>
+      <select id="gpuB"><option value="">اختر الكرت الثاني</option></select>
+    </div>
+    <div id="compareResult"></div>
+  </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
